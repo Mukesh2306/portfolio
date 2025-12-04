@@ -1,1 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mukesh P - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
 
+        .animate-fade-in { animation: fadeIn 1s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-300">
+    <div id="root"></div>
+
+    <!-- React and Dependencies via ESM -->
+    <script type="module">
+        import React, { useState, useEffect } from 'https://esm.sh/react@18.2.0';
+        import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
+        import { 
+            Github, Linkedin, Mail, ExternalLink, Code, User, Briefcase, 
+            Terminal, Database, Globe, Menu, X, ChevronDown, FileText, 
+            Download, GraduationCap, Award, BarChart, Phone, MapPin
+        } from 'https://esm.sh/lucide-react@0.263.1';
+
+        const Portfolio = () => {
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const [activeSection, setActiveSection] = useState('home');
+            const [scrolled, setScrolled] = useState(false);
+
+            // --- DATA FROM RESUME ---
+            const personalInfo = {
+                name: "Mukesh P",
+                title: "Business Analyst & Data Enthusiast",
+                location: "Chennai, India",
+                email: "mukeshprabakaran2004@gmail.com",
+                phone: "+91 8248862066",
+                linkedin: "www.linkedin.com/in/mukesh-p23",
+                summary: "Highly motivated and results-driven professional with an advanced degree in Management (MBA) and a technical foundation in Computer Applications (BCA). Demonstrated ability to translate data insights into tangible business results, successfully leading analysis that reduced procurement time by 10% and resulted in the launch of two new products."
+            };
+
+            const skills = [
+                { name: 'SQL', icon: React.createElement(Database, {size: 20}) },
+                { name: 'Power BI', icon: React.createElement(BarChart, {size: 20}) },
+                { name: 'Microsoft Office', icon: React.createElement(FileText, {size: 20}) },
+                { name: 'Google Analytics', icon: React.createElement(Globe, {size: 20}) },
+                { name: 'Python (Data/AI)', icon: React.createElement(Code, {size: 20}) },
+                { name: 'Event Management', icon: React.createElement(User, {size: 20}) },
+                { name: 'Business Strategy', icon: React.createElement(Briefcase, {size: 20}) },
+                { name: 'Web Development', icon: React.createElement(Terminal, {size: 20}) }
+            ];
+
+            const experience = [
+                {
+                    company: "R.K Engineering Works",
+                    role: "Business Analyst",
+                    period: "June 2025 - Aug 2025",
+                    description: [
+                        "Conducted research on the B2B sector to improve productivity and sales, leading to a 10% time reduction on raw material procurement.",
+                        "Conducted research on the B2C sector to expand the product chain, resulting in the introduction of 2 new products.",
+                        "Managed the company's marketing data on internet platforms and social media."
+                    ]
+                }
+            ];
+
+            const education = [
+                {
+                    school: "SRM Institute of Science and Technology",
+                    degree: "MBA (Master of Business Administration)",
+                    period: "June 2024 - May 2026",
+                    details: "CGPA: 8.8"
+                },
+                {
+                    school: "PSG College of Arts and Science",
+                    degree: "BCA (Bachelor of Computer Applications)",
+                    period: "June 2021 - April 2024",
+                    details: "CGPA: 7.7"
+                }
+            ];
+
+            const projects = [
+                {
+                    title: "Hybrid Time-Series Forecasting",
+                    year: "2025",
+                    description: "Addressed financial risk by developing three time-series models (ARIMA, ARIMA-CNN, ARIMA-LSTM). The hybrid approach used deep learning to model non-linear residuals.",
+                    impact: "Reduced RMSE by 45.3% and MAE by 30.8% compared to baseline. Enabled optimized inventory management (Just-in-Time).",
+                    tags: ["Python", "Deep Learning", "ARIMA", "CNN", "LSTM"]
+                },
+                {
+                    title: "Healthcare Chatbot",
+                    year: "2024",
+                    description: "Developed a chatbot capable of analyzing over 50 common symptoms to provide real-time condition assessments and suggest personalized first-aid.",
+                    impact: "Achieved 85% accuracy in symptom-to-condition mapping and reduced preliminary diagnosis time by 70%.",
+                    tags: ["AI", "NLP", "Healthcare"]
+                },
+                {
+                    title: "Dog Adoption Website",
+                    year: "2023",
+                    description: "Developed a user-friendly dog adoption platform designed to streamline and digitize the adoption process, ensuring a safe and transparent experience.",
+                    impact: "Improved adoption efficiency by 40% and contributed to greater awareness of animal welfare.",
+                    tags: ["Web Dev", "UX/UI", "Social Impact"]
+                }
+            ];
+
+            const certifications = [
+                "Introduction to SQL (Udemy, 2025)",
+                "Microsoft Excel (Udemy, 2024)",
+                "Social Media Marketing (HP LIFE, 2024)",
+                "Google Analytics (Google, 2024)",
+                "Database Management System (NPTEL, 2022)"
+            ];
+
+            const achievements = [
+                {
+                    title: "Regional Finalist",
+                    event: "'Chanakya' Business Simulation Game (AIMA)",
+                    desc: "Competed against 120+ students at Hindustan Institute of Technology (2025)."
+                },
+                {
+                    title: "Second Place",
+                    event: "Inter-Departmental Hackathon",
+                    desc: "Competed among 30+ teams at PSG College Of Arts & Science (2023)."
+                }
+            ];
+
+            const leadership = [
+                "Coordinator of 'Nakshatra'25' (Inter-collegiate women's fest, 170+ participants).",
+                "Organizer of 'INTELLECTA'25' (State-level hackathon, 200+ participants).",
+                "Organizer of 'INCOGNITECH' (Inter-Dept event, 100+ participants, 2024).",
+                "Organizer of 'UI Creation' (State Level UI Event, 150+ students, 2023)."
+            ];
+
+            // Handle scroll effects
+            useEffect(() => {
+                const handleScroll = () => {
+                    setScrolled(window.scrollY > 50);
+                    const sections = ['home', 'about', 'experience', 'projects', 'achievements', 'contact'];
+                    const current = sections.find(section => {
+                        const element = document.getElementById(section);
+                        if (element) {
+                            const rect = element.getBoundingClientRect();
+                            return rect.top >= 0 && rect.top <= 300;
+                        }
+                        return false;
+                    });
+                    if (current) setActiveSection(current);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const scrollToSection = (id) => {
+                setIsMenuOpen(false);
+                const element = document.getElementById(id);
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return React.createElement("div", { className: "min-h-screen bg-slate-900 text-slate-300 font-sans selection:bg-emerald-500/30" },
+                // Navigation
+                React.createElement("nav", { className: `fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900/95 backdrop-blur-md shadow-lg border-b border-slate-800' : 'bg-transparent'}` },
+                    React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
+                        React.createElement("div", { className: "flex items-center justify-between h-16" },
+                            React.createElement("div", { className: "flex-shrink-0 cursor-pointer group", onClick: () => scrollToSection('home') },
+                                React.createElement("span", { className: "text-2xl font-bold text-emerald-400 font-mono group-hover:text-emerald-300 transition-colors" }, "MP")
+                            ),
+                            React.createElement("div", { className: "hidden md:flex items-center space-x-8" },
+                                ['About', 'Experience', 'Projects', 'Achievements', 'Contact'].map((item) => 
+                                    React.createElement("button", {
+                                        key: item,
+                                        onClick: () => scrollToSection(item.toLowerCase()),
+                                        className: `text-sm font-medium transition-colors duration-300 ${activeSection === item.toLowerCase() ? 'text-emerald-400' : 'text-slate-300 hover:text-emerald-400'}`
+                                    }, React.createElement("span", { className: "text-emerald-500 mr-1" }, "."), item)
+                                ),
+                            ),
+                            React.createElement("div", { className: "md:hidden" },
+                                React.createElement("button", { onClick: () => setIsMenuOpen(!isMenuOpen), className: "p-2 text-slate-400 hover:text-white" },
+                                    isMenuOpen ? React.createElement(X, { size: 24 }) : React.createElement(Menu, { size: 24 })
+                                )
+                            )
+                        )
+                    ),
+                    isMenuOpen && React.createElement("div", { className: "md:hidden bg-slate-900 border-b border-slate-800 shadow-xl" },
+                        React.createElement("div", { className: "px-4 pt-2 pb-4 space-y-1" },
+                            ['About', 'Experience', 'Projects', 'Achievements', 'Contact'].map((item) => 
+                                React.createElement("button", {
+                                    key: item,
+                                    onClick: () => scrollToSection(item.toLowerCase()),
+                                    className: "block w-full text-left px-3 py-3 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800"
+                                }, React.createElement("span", { className: "text-emerald-500 mr-2" }, "/"), item)
+                            )
+                        )
+                    )
+                ),
+
+                // Hero Section
+                React.createElement("section", { id: "home", className: "pt-20 min-h-screen flex items-center justify-center relative overflow-hidden" },
+                    React.createElement("div", { className: "absolute top-20 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-[100px] -z-10" }),
+                    React.createElement("div", { className: "absolute bottom-20 left-0 w-72 h-72 bg-blue-500/10 rounded-full blur-[100px] -z-10" }),
+                    React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" },
+                        React.createElement("div", { className: "space-y-6 animate-fade-in" },
+                            React.createElement("p", { className: "text-emerald-400 font-mono text-lg" }, "Hi, my name is"),
+                            React.createElement("h1", { className: "text-5xl md:text-7xl font-bold text-slate-100 tracking-tight" }, personalInfo.name + "."),
+                            React.createElement("h2", { className: "text-4xl md:text-6xl font-bold text-slate-400" }, personalInfo.title + "."),
+                            React.createElement("p", { className: "max-w-xl text-lg text-slate-400 leading-relaxed mt-6" },
+                                "Translating data insights into tangible business results. MBA & BCA graduate with a passion for analytics, strategy, and technology."
+                            ),
+                            React.createElement("div", { className: "flex flex-col sm:flex-row gap-4 mt-8" },
+                                React.createElement("button", { onClick: () => scrollToSection('projects'), className: "px-8 py-4 bg-emerald-500 text-slate-900 font-bold rounded hover:bg-emerald-400 transition-all duration-300 shadow-lg shadow-emerald-500/20" }, "View My Projects"),
+                                React.createElement("button", { onClick: () => scrollToSection('contact'), className: "px-8 py-4 border border-slate-600 text-slate-300 font-bold rounded hover:border-emerald-500 hover:text-emerald-400 transition-all" }, "Contact Me")
+                            )
+                        )
+                    ),
+                    React.createElement("div", { className: "absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer", onClick: () => scrollToSection('about') },
+                        React.createElement(ChevronDown, { size: 32, className: "text-slate-500 hover:text-emerald-400" })
+                    )
+                ),
+
+                // About Section
+                React.createElement("section", { id: "about", className: "py-24 bg-slate-800/30" },
+                    React.createElement("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" },
+                        React.createElement("div", { className: "flex items-center gap-4 mb-12" },
+                            React.createElement("span", { className: "font-mono text-emerald-400 text-xl" }, "01."),
+                            React.createElement("h2", { className: "text-3xl font-bold text-slate-100" }, "About Me"),
+                            React.createElement("div", { className: "h-px bg-slate-700 flex-grow max-w-xs ml-4" })
+                        ),
+                        React.createElement("div", { className: "grid md:grid-cols-3 gap-12" },
+                            React.createElement("div", { className: "md:col-span-2 space-y-6 text-lg text-slate-400" },
+                                React.createElement("p", null, personalInfo.summary),
+                                React.createElement("p", null, 
+                                    "I thrive at the intersection of ", React.createElement("span", { className: "text-emerald-400" }, "business strategy"), 
+                                    " and ", React.createElement("span", { className: "text-emerald-400" }, "technical execution"), 
+                                    ". My experience organizing large-scale events has honed my leadership skills."
+                                ),
+                                React.createElement("div", { className: "mt-8" },
+                                    React.createElement("h3", { className: "text-slate-200 font-bold mb-4" }, "Technical & Professional Skills"),
+                                    React.createElement("div", { className: "grid grid-cols-2 gap-4" },
+                                        skills.map((skill, index) => 
+                                            React.createElement("div", { key: index, className: "flex items-center gap-3 p-3 bg-slate-800 rounded border border-slate-700 hover:border-emerald-500/50 transition-colors" },
+                                                React.createElement("span", { className: "text-emerald-400" }, skill.icon),
+                                                React.createElement("span", { className: "text-sm font-mono" }, skill.name)
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+                            React.createElement("div", { className: "space-y-6" },
+                                React.createElement("div", { className: "p-6 bg-slate-800 rounded-lg border border-slate-700" },
+                                    React.createElement("h3", { className: "text-xl font-bold text-slate-100 mb-4 flex items-center gap-2" }, React.createElement(GraduationCap, { className: "text-emerald-400" }), " Education"),
+                                    React.createElement("div", { className: "space-y-6" },
+                                        education.map((edu, idx) => 
+                                            React.createElement("div", { key: idx, className: "relative pl-4 border-l-2 border-slate-700" },
+                                                React.createElement("h4", { className: "font-bold text-slate-200" }, edu.degree),
+                                                React.createElement("p", { className: "text-emerald-400 text-sm mb-1" }, edu.school),
+                                                React.createElement("p", { className: "text-xs text-slate-500 font-mono mb-1" }, edu.period),
+                                                React.createElement("p", { className: "text-sm text-slate-400" }, edu.details)
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+
+                // Experience Section
+                React.createElement("section", { id: "experience", className: "py-24" },
+                    React.createElement("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" },
+                        React.createElement("div", { className: "flex items-center gap-4 mb-12" },
+                            React.createElement("span", { className: "font-mono text-emerald-400 text-xl" }, "02."),
+                            React.createElement("h2", { className: "text-3xl font-bold text-slate-100" }, "Experience"),
+                            React.createElement("div", { className: "h-px bg-slate-700 flex-grow max-w-xs ml-4" })
+                        ),
+                        React.createElement("div", { className: "space-y-12" },
+                            experience.map((job, index) => 
+                                React.createElement("div", { key: index, className: "relative border-l border-slate-700 ml-3 md:ml-6 pl-8 md:pl-12 py-2 group" },
+                                    React.createElement("div", { className: "absolute -left-[5px] top-2 w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-slate-900 group-hover:ring-emerald-500/20 transition-all" }),
+                                    React.createElement("div", { className: "flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4" },
+                                        React.createElement("h3", { className: "text-2xl font-bold text-slate-100" }, job.role, React.createElement("span", { className: "text-emerald-400" }, " @ ", job.company)),
+                                        React.createElement("span", { className: "font-mono text-sm text-slate-400 bg-slate-800 px-3 py-1 rounded-full mt-2 sm:mt-0" }, job.period)
+                                    ),
+                                    React.createElement("ul", { className: "space-y-3" },
+                                        job.description.map((point, i) => 
+                                            React.createElement("li", { key: i, className: "flex items-start gap-3 text-slate-400 text-lg" },
+                                                React.createElement("span", { className: "text-emerald-400 mt-2" }, "▹"),
+                                                React.createElement("span", { className: "leading-relaxed" }, point)
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+
+                // Projects Section
+                React.createElement("section", { id: "projects", className: "py-24 bg-slate-800/30" },
+                    React.createElement("div", { className: "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" },
+                        React.createElement("div", { className: "flex items-center gap-4 mb-12" },
+                            React.createElement("span", { className: "font-mono text-emerald-400 text-xl" }, "03."),
+                            React.createElement("h2", { className: "text-3xl font-bold text-slate-100" }, "Featured Projects"),
+                            React.createElement("div", { className: "h-px bg-slate-700 flex-grow max-w-xs ml-4" })
+                        ),
+                        React.createElement("div", { className: "grid md:grid-cols-2 lg:grid-cols-3 gap-8" },
+                            projects.map((project, index) => 
+                                React.createElement("div", { key: index, className: "bg-slate-800 rounded-xl p-6 hover:-translate-y-2 transition-transform duration-300 border border-slate-700 group hover:border-emerald-500/50 shadow-lg flex flex-col h-full" },
+                                    React.createElement("div", { className: "flex justify-between items-start mb-4" },
+                                        React.createElement("div", { className: "p-3 bg-slate-900 rounded-lg text-emerald-400" }, React.createElement(Briefcase, { size: 24 })),
+                                        React.createElement("span", { className: "text-xs font-mono text-slate-500" }, project.year)
+                                    ),
+                                    React.createElement("h3", { className: "text-xl font-bold text-slate-100 mb-2 group-hover:text-emerald-400 transition-colors" }, project.title),
+                                    React.createElement("p", { className: "text-slate-400 mb-4 text-sm leading-relaxed" }, project.description),
+                                    React.createElement("div", { className: "mt-auto pt-4 border-t border-slate-700/50" },
+                                        React.createElement("p", { className: "text-emerald-400 text-sm font-medium mb-3" }, "Impact: ", React.createElement("span", { className: "text-slate-400 font-normal" }, project.impact)),
+                                        React.createElement("div", { className: "flex flex-wrap gap-2" },
+                                            project.tags.map((tag, tIndex) => 
+                                                React.createElement("span", { key: tIndex, className: "text-xs font-mono text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded" }, tag)
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+
+                // Achievements Section
+                React.createElement("section", { id: "achievements", className: "py-24" },
+                    React.createElement("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" },
+                        React.createElement("div", { className: "flex items-center gap-4 mb-12" },
+                            React.createElement("span", { className: "font-mono text-emerald-400 text-xl" }, "04."),
+                            React.createElement("h2", { className: "text-3xl font-bold text-slate-100" }, "Honors & Certifications"),
+                            React.createElement("div", { className: "h-px bg-slate-700 flex-grow max-w-xs ml-4" })
+                        ),
+                        React.createElement("div", { className: "grid md:grid-cols-2 gap-12" },
+                            React.createElement("div", null,
+                                React.createElement("h3", { className: "text-xl font-bold text-slate-100 mb-6 flex items-center gap-2" }, React.createElement(Award, { className: "text-emerald-400" }), " Certifications"),
+                                React.createElement("div", { className: "space-y-4" },
+                                    certifications.map((cert, idx) => 
+                                        React.createElement("div", { key: idx, className: "flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700" },
+                                            React.createElement("div", { className: "h-2 w-2 rounded-full bg-emerald-400" }),
+                                            React.createElement("span", { className: "text-slate-300" }, cert)
+                                        )
+                                    )
+                                )
+                            ),
+                            React.createElement("div", null,
+                                React.createElement("h3", { className: "text-xl font-bold text-slate-100 mb-6 flex items-center gap-2" }, React.createElement(User, { className: "text-emerald-400" }), " Leadership & Awards"),
+                                React.createElement("div", { className: "space-y-6" },
+                                    achievements.map((ach, idx) => 
+                                        React.createElement("div", { key: idx, className: "border-l-2 border-emerald-500/30 pl-4" },
+                                            React.createElement("h4", { className: "text-lg font-bold text-slate-200" }, ach.title),
+                                            React.createElement("p", { className: "text-emerald-400 text-sm" }, ach.event),
+                                            React.createElement("p", { className: "text-sm text-slate-500 mt-1" }, ach.desc)
+                                        )
+                                    ),
+                                    React.createElement("div", { className: "mt-6" },
+                                        React.createElement("h4", { className: "text-slate-300 font-bold mb-3 border-b border-slate-700 pb-2" }, "Positions of Responsibility"),
+                                        React.createElement("ul", { className: "space-y-2 text-sm text-slate-400" },
+                                            leadership.map((role, idx) => React.createElement("li", { key: idx }, "• " + role))
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+
+                // Contact Section
+                React.createElement("section", { id: "contact", className: "py-24 text-center" },
+                    React.createElement("div", { className: "max-w-2xl mx-auto px-4" },
+                        React.createElement("p", { className: "text-emerald-400 font-mono mb-4" }, "05. What's Next?"),
+                        React.createElement("h2", { className: "text-4xl md:text-5xl font-bold text-slate-100 mb-6" }, "Get In Touch"),
+                        React.createElement("p", { className: "text-slate-400 text-lg mb-10" },
+                            "I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!"
+                        ),
+                        React.createElement("div", { className: "flex flex-col md:flex-row justify-center gap-6 mb-12" },
+                            React.createElement("a", { href: `mailto:${personalInfo.email}`, className: "flex items-center justify-center gap-2 text-slate-300 hover:text-emerald-400 transition-colors" },
+                                React.createElement(Mail, { size: 20 }), personalInfo.email
+                            ),
+                            React.createElement("a", { href: `tel:${personalInfo.phone}`, className: "flex items-center justify-center gap-2 text-slate-300 hover:text-emerald-400 transition-colors" },
+                                React.createElement(Phone, { size: 20 }), personalInfo.phone
+                            )
+                        ),
+                        React.createElement("a", { 
+                            href: `mailto:${personalInfo.email}`,
+                            className: "inline-flex items-center gap-2 px-8 py-4 border border-emerald-500 text-emerald-500 font-bold rounded hover:bg-emerald-500/10 transition-all duration-300"
+                        }, "Say Hello"),
+                        React.createElement("div", { className: "mt-20 flex justify-center gap-8" },
+                            React.createElement("a", { href: `https://${personalInfo.linkedin}`, target: "_blank", rel: "noreferrer", className: "text-slate-400 hover:text-emerald-400 hover:-translate-y-1 transition-all" },
+                                React.createElement(Linkedin, { size: 24 })
+                            )
+                        )
+                    )
+                ),
+
+                // Footer
+                React.createElement("footer", { className: "py-6 text-center text-slate-500 text-sm bg-slate-900 border-t border-slate-800" },
+                    React.createElement("p", { className: "mb-2" }, "Designed & Built by " + personalInfo.name),
+                    React.createElement("div", { className: "flex justify-center gap-2 text-xs font-mono mt-2" },
+                        React.createElement("span", null, personalInfo.location),
+                        React.createElement("span", null, "•"),
+                        React.createElement("span", null, "Available for Hire")
+                    )
+                )
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(Portfolio));
+    </script>
+</body>
+</html>
